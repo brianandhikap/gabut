@@ -1,0 +1,247 @@
+// import 'package:latihan_firebase_apps/helper/helper_function.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:latihan_firebase_apps/components/button_page.dart';
+// import 'package:latihan_firebase_apps/components/textfield_page.dart';
+
+// class LoginPage extends StatefulWidget {
+//   final void Function()? onTap;
+//   const LoginPage({
+//     super.key,
+//     this.onTap,
+//   });
+
+//   @override
+//   State<LoginPage> createState() => LoginPageState();
+// }
+
+// class _LoginPageState extends State<LoginPage> {
+//   //text controller
+//   final TextEditingController emailController = TextEditingController();
+//   final TextEditingController passwordController = TextEditingController();
+
+//   //fungsi untuk login
+//   void login() async {
+//     showDialog(
+//       context: context,
+//       builder: (context) => const Center(
+//         child: CircularProgressIndicator(),
+//       ),
+//     );
+//     try {
+//       await FirebaseAuth.instance.signInWithEmailAndPassword(
+//           email: emailController.text,
+//           password: passwordController.text);
+//       if (context.mounted) Navigator.pop(context);
+//     } on FirebaseAuthException catch (e) {
+//       Navigator.pop(context);
+//       displayErrorToUser(e.code, context);
+//     }
+//   }
+// }
+// @override
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     body: Center(
+//       child: Padding(
+//         padding: const EdgeInsets.all(25.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             //logo
+//             //Nama Aplikasi
+//             //Textfield email
+//             TextfieldPage(
+//               hintText: 'Email',
+//               obscureText: false,
+//               controller: emailController,
+//             ),
+//             const SizedBox(height: 15),
+//             //Textfield password
+//             TextfieldPage(
+//               hintText: 'Password',
+//               obscureText: true,
+//               controller: passwordController,
+//             ),
+//             const SizedBox(height: 15),
+//             //forgot password
+//             const Row(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: [
+//                 Text('Forgot Password?'),
+//               ],
+//             ),
+//             const SizedBox(height: 25),
+//             //signin button
+//             ButtonPage(
+//               text: 'Login',
+//               onTap: login,
+//             ),
+//             const SizedBox(height: 25),
+//             //don't have account/registrasi
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 const Text(
+//                   "Don't Have an Account?",
+//                   style: TextStyle(
+//                     color: Colors.grey,
+//                   ),
+//                 ),
+//                 GestureDetector(
+//                   onTap: widget.onTap,
+//                   child: const Text(
+//                     "Register Here",
+//                     style: TextStyle(
+//                       color: Colors.black26,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+==========================================================================================================
+
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:latihan_firebase_apps/components/button_page.dart';
+
+// import 'package:latihan_firebase_apps/components/textfield_page.dart';
+
+// import '../helper/helper_function.dart';
+
+// class RegisterPage extends StatefulWidget {
+//   final void Function()? onTap;
+//   const RegisterPage({
+//     super.key,
+//     this.onTap,
+//   });
+
+//   @override
+//   State<RegisterPage> createState() => RegisterPageState();
+// }
+
+// class _RegisterPageState extends State<RegisterPage> {
+//   //text controller
+//   final TextEditingController emailController = TextEditingController();
+//   final TextEditingController usernameController = TextEditingController();
+//   final TextEditingController passwordController = TextEditingController();
+//   final TextEditingController confirmpasswordController =
+//       TextEditingController();
+
+//   //fungsi untuk register
+//   void registerUser() async {
+//     //loading proses
+//     showDialog(
+//       context: context,
+//       builder: (context) => const Center(
+//         child: CircularProgressIndicator(),
+//       ),
+//     );
+
+//     //pastikan password dan confirm password sama
+//     if (passwordController.text !=
+//         confirmpasswordController.text) {
+//       Navigator.pop(context);
+//       //show error
+//       displayErrorToUser("Password tidak sama", context);
+//     } else {
+//       try {
+//         //create user
+//         UserCredential? userCredential =
+//             await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//           email: emailController.text,
+//           password: passwordController.text,
+//         );
+//         Navigator.pop(context);
+//       } on FirebaseAuthException catch (e) {
+//         Navigator.pop(context);
+//         displayErrorToUser(e.code, context);
+//       }
+//     }
+//   }
+// }
+// @override
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     body: Center(
+//       child: Padding(
+//         padding: const EdgeInsets.all(25.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             //logo
+//             //Nama Aplikasi
+//             //Textfield username
+//             TextfieldPage(
+//               hintText: 'Username',
+//               obscureText: false,
+//               controller: usernameController,
+//             ),
+//             const SizedBox(height: 15),
+//             //Textfield email
+//             TextfieldPage(
+//               hintText: 'Email',
+//               obscureText: false,
+//               controller: emailController,
+//             ),
+//             const SizedBox(height: 15),
+//             //Textfield password
+//             TextfieldPage(
+//               hintText: 'Password',
+//               obscureText: true,
+//               controller: passwordController,
+//             ),
+//             const SizedBox(height: 15),
+//             //Textfield confirm password
+//             TextfieldPage(
+//               hintText: 'Confirm Password',
+//               obscureText: true,
+//               controller: confirmpasswordController,
+//             ),
+//             const SizedBox(height: 25),
+//             //signin button
+//             ButtonPage(
+//               text: 'Register',
+//               onTap: registerUser,
+//             ),
+//             const SizedBox(height: 25),
+//             //don't have account/registrasi
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 const Text(
+//                   "Already Have an Account?",
+//                   style: TextStyle(
+//                     color: Colors.grey,
+//                   ),
+//                 ),
+//                 GestureDetector(
+//                   onTap: widget.onTap,
+//                   child: const Text(
+//                     "Login Here",
+//                     style: TextStyle(
+//                       color: Colors.black26,
+//                       FontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
+
+
+
+
